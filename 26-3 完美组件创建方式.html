@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件Component基本定义和用法</title>
+    <script src="./js/vue-2.5.21.js"></script>
+    <script>
+        window.onload = function () {
+
+            //定义全局组件mycom
+            Vue.component('mycom', {
+
+                // 通过定义template属性，指定组件要展示的html结构和内容
+                template: "#mytem",
+
+                //data必须是函数，且有返回一个对象，这样才能使组件具备复用性
+                data: function () {
+
+                    return {
+                        count: 0
+                    }
+                },
+                //组件内使用的方法
+                methods: {
+                    add: function () {
+                        this.count++;
+                    }
+                }
+            })
+
+            // 定义一个Vue实例
+            var vm = new Vue({
+                el: "#app"
+            });
+        }
+    </script>
+
+    
+</head>
+
+<body>
+    <div id="app">
+        <mycom></mycom>
+    </div>
+
+    <template id="mytem">
+        <div>
+            <h1>这是通过template元素在外部定义的组件结构，这个方式具有语法高亮，代码自动补全的好处</h1>
+            <h3>推荐写法！</h3>
+        </div>
+    </template>
+
+
+</body>
+
+</html>

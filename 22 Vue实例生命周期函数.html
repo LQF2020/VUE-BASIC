@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue实例的生命周期函数</title>
+    <script src='./js/vue-2.5.21.js'></script>
+    <script>
+        window.onload = function(){
+            var vm = new Vue({
+                el:"#app",
+                data:{
+                    createdMsg:'Instance Vue has been created. Data and methods could be used',
+                    mountedMsg:'template already is mounted in the Website',
+                },
+                methods:{
+                    show:() => {
+                        console.log('This is the Show method')
+                    }
+                },
+                beforeCreate() {
+                    // Vue实例还没被创建， 这里不能调用data和methods，否则会报错
+                },
+                created() {
+                    // Vue实例创建成功，这里可以调用data和methods
+                    console.log(this.createdMsg);
+                    this.show();
+                },
+                beforeMount(){
+                    //在内存中完成了Vue模板的编译,但DOM元素尚未被渲染中，模板未挂载到浏览器页面
+                    console.log(document.getElementById('mounted').innerText)
+                },
+                mounted(){
+                    //在内存中完成了Vue模板的编译,模板挂载到浏览器页面，DOM元素渲染成功
+                    console.log(document.getElementById('mounted').innerText)
+                },
+                beforeUpdate() {
+                    console.log('原来DOM挂载的值：'+document.getElementById('mounted').innerText);
+                    console.log('内存中已被修改的值：'+this.mountedMsg);
+                },
+                updated() {
+                    console.log('DOM挂载的值：' + document.getElementById('mounted').innerText);
+                    console.log('内存中已被修改的值：' + this.mountedMsg);
+                },
+                // 当页面关闭时，会触发destroy函数
+                //当处于beforeDestroy，data。methods,filters和指令等自身属性方法都处于可用状态
+                beforeDestroy() {
+                    
+                },
+        
+                //当处于Destroyed，data。methods,filters和指令等自身属性方法处于不可用状态
+                destroyed() {
+                    
+                },
+               
+            });
+
+        }
+    </script>
+</head>
+<body>
+    <div id="app">
+        <div id="mounted">
+            {{mountedMsg}}
+        </div>
+        <input type="button" value='Update Message!' @click="mountedMsg='updateMsg'">
+    </div>
+    
+</body>
+</html>

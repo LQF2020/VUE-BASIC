@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>事件修饰符</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <script src="./js/vue-2.5.21.js"></script>
+        <script>
+            window.onload = function(){
+                var vm = new Vue({
+                    el:".app",
+                    data:{
+                        stylediv:{
+                            width:"100px",
+                            height:"100px",
+                            background:"red",
+                        },
+                         btndiv: {
+                            width: "50px",
+                            height: "30px",
+                            margin: "25px 25px 25px 25px",
+                        }
+                    },
+                    methods:{
+                        divHandler: () => {
+                            alert('这是触发了div的点击事件');
+                        },
+                        btnHandler: () => {
+                            alert('这是触发了button的点击事件');
+                        }
+
+                    }
+                })
+            }
+        </script>
+    </head>
+    <body>
+        
+        <div class="app">
+            <h2>正常冒泡事件，由button->div</h2>
+            <div @click="divHandler" :style="stylediv">
+                <input type="button" value="click" @click="btnHandler" :style="btndiv">
+            </div>
+
+            <hr>
+            <h2>修饰符.stop 阻止冒泡事件，只触发button自身事件</h2>
+            <div @click="divHandler" :style="stylediv">
+                <input type="button" value="click" @click.stop="btnHandler" :style="btndiv">
+            </div>
+
+            <hr>
+            <h2>修饰符.prevent 阻止默认事件，e.g. a按钮默认行为是跳转，prevent可以阻止其跳转</h2>
+                <a href="./01 vue基本用法.html" >vue基本用法html</a>
+                <br>
+                <a href="./01 vue基本用法.html" @click.prevent>vue基本用法html(添加了.prevent)</a>
+          
+
+            <hr>
+            <h2>修饰符.capture 捕获事件，即与冒泡事件相反，事件由外向内促发</h2>
+            <div @click.capture="divHandler" :style="stylediv">
+                <input type="button" value="click" @click="btnHandler" :style="btndiv">
+            </div>
+
+            <hr>
+            <h2>修饰符.self 只触发与自身相关的事件</h2>
+            <div @click.self="divHandler" :style="stylediv">
+                <input type="button" value="click" @click="btnHandler" :style="btndiv">
+            </div>
+
+            <hr>
+            <h2>修饰符.once 事件只触发一次</h2>
+            <div @click="divHandler" :style="stylediv">
+                <input type="button" value="click" @click.once="btnHandler" :style="btndiv">
+            </div>
+
+    
+            
+
+        </div>
+        
+
+       
+       
+    </body>
+</html>

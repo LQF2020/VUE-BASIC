@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-model事件修饰符</title>
+    <script src="./js/vue-2.5.21.js"></script>
+    <script>
+        window.onload = function(){
+            var vm = new Vue({
+                el:"#app",
+                data:{
+                    msg1:'',
+                    msg2:'',
+                    msg3:'',
+                    msg4:''
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="app">
+        <h2>1.Input Message:{{msg1}}(无修饰符，动态修改表单数据)</h2>
+        <input type="text" placeholder="Please Input something..." v-model="msg1">
+        <hr>
+        <h2>2.Input Message:{{msg2}}(.lazy修饰符，只有表单数据输入完毕才发生改变)</h2>
+        <input type="text" placeholder="Please Input something..." v-model.lazy="msg2">
+        <hr>
+        <h2>3.Input Message:{{msg3}}(.number修饰符)</h2>
+        <input type="text" placeholder="Please Input something..." type="number" v-model.number="msg3">
+        <hr>
+        <h2>4.Input Message:{{msg4}}(.trim修饰符,自动过滤用户输入的首尾空白字符)</h2>
+        <input type="text" placeholder="Please Input something..." v-model.trim="msg4">
+    </div>
+</body>
+</html>

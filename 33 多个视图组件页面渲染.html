@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>多个视图组件页面渲染</title>
+    <style>
+
+        html,body,h1,h2,h3,h4,h5,h6,div,span,ul,li{
+            margin: 0;
+            padding: 0
+        }
+
+        #header{
+            width: 960px;
+            margin: 0 auto;
+            height: 150px;
+            background-color:lemonchiffon;
+            color: blue;
+        }
+
+        .container{
+            display: flex;
+            width: 960px;
+            margin: 0 auto;
+        }
+
+        #sideBar{
+            background-color:lightblue;
+            height: 250px;
+            flex-grow: 2;
+        }
+
+        #main{
+            background-color:linen;
+            height: 250px;
+            flex-grow: 8;
+        }
+
+    </style>
+    <script src="./js/vue-2.5.21.js"></script>
+    <script src="./js/vue-router.js"></script>
+    <script>
+        window.onload = function () {
+
+            // 1. 定义 (路由) 组件。
+            // 可以从其他文件 import 进来
+            const headerCom = { template: "<div id='header'>这是header区域</div>" }
+            const sideBarCom = { template: "<div id='sideBar'>这是sidebar区域</div>" }
+            const mainCom = { template: "<div id='main'>这是main区域</div>" }
+
+            // 2. 定义路由
+            // 每个路由应该映射一个组件。 其中"components" 可以是
+            // 一个组件集合对象，为后面引用不同的组件进行命名
+            const routes = [
+                { path: '/', 
+                  components:{
+                      default:headerCom,
+                      sideBar:sideBarCom,
+                      main:mainCom
+                  }
+                },
+          
+            ]
+
+            // 3. 创建 router 实例，然后传 `routes` 配置
+            // 你还可以传别的配置参数, 不过先这么简单着吧。
+            const routerObj = new VueRouter({
+                routes // (缩写) 相当于 routes: routes
+            })
+
+            var vm = new Vue({
+                el: "#app",
+                router: routerObj
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div id="app">
+        <h1>Hello App!</h1>
+        <!-- 这是顶层parentTem路由视图出口 -->
+        <!-- 路由匹配到的组件将渲染在这里 -->
+        <router-view  name="default"></router-view>
+        <div class="container">
+            <router-view  name="sideBar"></router-view>
+            <router-view  name="main"></router-view>
+        </div>
+    </div>
+
+</body>
+
+</html>

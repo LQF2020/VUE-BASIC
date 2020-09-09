@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>router的基本使用</title>
+    <script src="./js/vue-2.5.21.js"></script>
+    <script src="./js/vue-router.js"></script>
+    <script>
+        window.onload = function(){
+
+            // 1. 定义 (路由) 组件。
+            // 可以从其他文件 import 进来
+            const Foo = { template: '<div>foo</div>' }
+            const Bar = { template: '<div>bar</div>' }
+            const index = { template: '<div>This is default index page</div>' }
+
+            // 2. 定义路由
+            // 每个路由应该映射一个组件。 其中"component" 可以是
+            // 通过 Vue.extend() 创建的组件构造器，
+            // 或者，只是一个组件配置对象。
+            const routes = [
+                { path: '/', redirect: '/index' },
+                { path: '/index', component: index },
+                { path: '/foo', component: Foo },
+                { path: '/bar', component: Bar } 
+            ]
+
+            // 3. 创建 router 实例，然后传 `routes` 配置
+            // 你还可以传别的配置参数, 不过先这么简单着吧。
+            const routerObj = new VueRouter({
+                routes // (缩写) 相当于 routes: routes
+            })
+
+            var vm = new Vue({
+                el: "#app",
+                router: routerObj
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="app">
+        <h1>Hello App!</h1>
+        <p>
+            <!-- 使用 router-link 组件来导航. -->
+            <!-- 通过传入 `to` 属性指定链接. -->
+            <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+            <router-link to="/foo" tag="button">Go to Foo</router-link>
+            <router-link to="/bar" tag="button">Go to Bar</router-link>
+        </p>
+        <!-- 路由出口 -->
+        <!-- 路由匹配到的组件将渲染在这里 -->
+        <router-view></router-view>
+    </div>
+</body>
+</html>

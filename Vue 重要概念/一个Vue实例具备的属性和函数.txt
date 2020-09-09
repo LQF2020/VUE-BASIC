@@ -1,0 +1,23 @@
+var vm = new Vue({
+
+//基本属性定义，本地数据，方法，过滤器，自定义指令，组件
+el:"#app",
+data:{},
+methods:{},
+filters:{},
+directives:{},
+components:{},
+//可以监视data中的指定数据的变化，并且触发应对函数
+watch:{},
+
+//生命周期函数
+beforeCreate(){},
+created(){},
+beforeMount(){},
+mounted(){},
+beforeUpdate(){},
+updated(){},
+beforeDestory(){},
+destroyed(){}
+
+});

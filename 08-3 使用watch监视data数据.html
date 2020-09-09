@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>使用watch监视data数据的改变</title>
+    <script src="./js/vue-2.5.21.js"></script>
+    <script>
+        window.onload = function(){
+            var vm = new Vue({
+                el:"#app",
+                data:{
+                    lastName:'',
+                    firstName:'',
+                    fullName:''
+                },
+                // 监听指定的data数据，如果数据发生变化，触发对应函数
+                watch:{
+                    
+                    lastName:function(newLastN,oldLastN){
+                        this.fullName = this.firstName +' '+ newLastN
+                    },
+                    firstName: function (newFirstN, oldFirstN) {
+                        this.fullName = newFirstN +' '+ this.lastName
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model='firstName'>+
+        <input type="text" v-model='lastName'>=
+        <input type="text" v-model='fullName'>
+
+
+    </div>
+    
+</body>
+</html>

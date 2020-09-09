@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>发送JSONP请求到服务器</title>
+    <script>
+        function show(data){
+            console.log(data);
+        }
+    </script>
+</head>
+<body>
+    <script src="http://127.0.0.1:3000/abc?callback=show"></script>
+</body>
+</html>

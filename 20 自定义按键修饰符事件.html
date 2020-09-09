@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自定义按键修饰符</title>
+    <script src="./js/vue-2.5.21.js"></script>
+    <script>
+        window.onload = function(){
+            Vue.config.keyCodes.f1 = 112;
+            var vm = new Vue({
+                el:"#app",
+                data:{
+                    n1:"",
+                    n2:"",
+                    opt:"",
+                    result:""
+                },
+                methods:{
+                    calc:function(){
+                        this.result = eval(this.n1 + this.opt + this.n2)
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="n1">
+        <select v-model="opt">
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+        </select>
+        
+        <!--按键修饰符 
+        .tab
+        .delete (捕获“删除”和“退格”键)
+        .esc
+        .space
+        .up
+        .down
+        .left
+        .right 
+        -->
+        <!-- 在输入完n2数据，按下enter键可以触发calc()函数 -->
+        <input type="text" v-model="n2" @keyup.enter = "calc()">
+        <input type="button" value="=" @click="calc()">
+        <input type="text" v-model="result">
+    </div>
+</body>
+</html>

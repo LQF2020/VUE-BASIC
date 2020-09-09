@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>自定义全局指令Directive</title>
+    <script src="./js/vue-2.5.21.js"></script>
+    <script>
+        window.onload = function(){
+            // 这里定义了一个全局指令 v-focus
+            //第一个参数为指令名称，在调用时需要加上 v- ,
+            Vue.directive('focus',{
+
+                bind:function(){  //只调用一次，指令第一次绑定到元素时调用。在这里可以进行一次性的初始化设置。
+
+                },
+                update:function(){ // 所在组件的 VNode 更新时调用，但是可能发生在其子 VNode 更新之前
+
+                },
+                inserted:function(el){ //insert:被绑定元素插入父节点时调用(仅保证父节点存在，但不一定已被插入文档中) 。
+                    el.focus(); 
+                }
+            });
+            Vue.directive('color', {
+                // 对dom元素进行样式绑定时，可以使用bind
+                bind: function (el) {  
+                    el.style.color = "red";
+                },
+                update: function () { 
+
+                },
+                // 对原声dom元素进行行为操作时，建议使用inserted
+                inserted: function (el) { 
+                }
+            })
+        
+            var vm = new Vue({
+                el:"#app",
+                data:{
+
+                },
+                // 这里定义了一个私有指令，只能被其对应的实例对象调用
+                directives: {
+                    focus: {
+                        // 指令的定义
+                        inserted: function (el) {
+                            el.focus()
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="app">
+        <!-- 这里调用了v-focus指令的inserted指令 -->
+        <input type="text" v-focus v-color>
+        <input type="button" value="Submit">
+    </div>
+</body>
+</html>

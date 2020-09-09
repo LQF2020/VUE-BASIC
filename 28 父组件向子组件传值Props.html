@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件Component基本定义和用法</title>
+    <script src="./js/vue-2.5.21.js"></script>
+    <script>
+        window.onload = function () {
+
+            var vm = new Vue({
+                el: "#app",
+                data: {
+                    message: "Hi,子组件"
+                },
+                methods: {},
+                components: {
+                    mycom1: {
+                        props: ['msg'],
+                        template: "#tem",              
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 我们可以通过v-bind 将父组件的data动态传递给子组件的 prop -->
+        <mycom1 v-bind:msg="message"></mycom1>
+    </div>
+
+    <template id="tem">
+        <div>
+            <!-- 子组件调用props的值 -->
+            <!-- props为只读元素，不能被修改，如果希望数据可写可读，应该使用data属性 -->
+            <h2>父组件向子组件传值，父组件：{{msg}}</h2>
+        </div>
+    </template>
+</body>
+
+</html>

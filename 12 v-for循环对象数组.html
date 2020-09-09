@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-for打印对象数组</title>
+</head>
+<script src="./js/vue-2.5.21.js"></script>
+<script>
+    window.onload = function () {
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                aNum: [
+                    { id: 1, name: "LiMing"},
+                    { id: 2, name: "ZhangHong" },
+                    { id: 3, name: "ChunHua" },
+                    { id: 4, name: "GuanZong" },
+                ],
+                sports:{
+                    Liming:"badminton",
+                    zhangHong:"pingpong ball",
+                    chunhua:"football",
+                    Guanzong:"baskerball",
+                }
+            },
+            methods: {
+
+            }
+        });
+    }
+</script>
+
+<body>
+    <div id="app">
+        <h2 style="color:red; opacity: 0.8; font-weight: 200">v-for循环打印对象数组</h2>
+        <li style="list-style: none" v-for="(item,index) in aNum">
+            {{index+1}}:id:{{ item.id }}  name:{{item.name}}
+        </li>
+        <hr>
+        <h2>The sports they like:</h2>
+        <li style="list-style: none" v-for="(item,index) in sports">
+            name:{{index}}--------{{item}}
+        </li>
+
+    </div>
+</body>
+
+</html>

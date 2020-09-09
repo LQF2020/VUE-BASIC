@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>v-bind用法</title>
+
+    <!--1.导入vue包-->
+    <script src="./js/vue-2.5.21.js"></script>
+    <script>
+        window.onload = function(){
+            // 导入vue包后，内存中就多了vue的构造函数
+            // <!--vm实例是 mvvm中的视图层 vm-->
+            var vm = new Vue({
+                // el代表了我们控制区域
+              el: '.app',
+            //    <!--data 数据是 mvvm中的视图层 m-->
+              data: {
+                styleObject: {
+                    background: 'red',
+                    width:'100px',
+                    height:'100px'
+                },
+                overridestyleObject: {
+                    background: 'green',
+                    width:'150px',
+                    height:'150px'
+                }
+              }
+            })
+         }
+
+    </script>
+</head>
+<body>
+    <div class="app">
+        <!--两种写法 :property || v-bind:property-->
+        <div :style="styleObject"></div>
+        <!--数组语法-->
+        <div v-bind:style="[styleObject,overridestyleObject]"></div>
+    </div>
+
+
+</body>
+</html>

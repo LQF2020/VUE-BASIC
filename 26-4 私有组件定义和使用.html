@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件Component基本定义和用法</title>
+    <script src="./js/vue-2.5.21.js"></script>
+    <script>
+        window.onload = function () {
+ 
+            var vm = new Vue({
+                el: "#app",
+                data: {},
+                methods: {},
+                components:{
+                    mycom1:{
+                        template:"#tem",
+                        data: function(){
+                            return {
+                                name: '我的私有组件'
+                            }
+                        },
+                        methods:{
+                            change:function(){
+                                this.name = "Hugo的私有组件"
+                            }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div id="app">
+        <mycom1></mycom1>
+    </div>
+
+    <template id="tem">
+        <div>
+            <h2>这是一个私有组件，只能被其所属实例使用，名字：{{name}}</h2>
+            <input type="button" value="change name" @click="change()">
+        </div>
+    </template>
+</body>
+
+</html>

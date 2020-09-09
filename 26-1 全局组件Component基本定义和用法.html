@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件Component基本定义和用法</title>
+    <script src="./js/vue-2.5.21.js"></script>
+    <script>
+        window.onload = function(){
+            // // 第一步：使用Vue.extend创建全局组件
+            // var com1 =Vue.extend({
+            //     // 通过定义template属性，指定组件要展示的html结构和内容
+            //     template:"<h3>这是使用Vue.extend创建一个组件</h3>"
+            // });
+
+            // // 第二步：使用Vue.component('组件的名称'，组件的对象实例)，对创建的组建进行命名
+            // Vue.component('mycom1',com1);
+
+
+            // 或者组合写法
+            Vue.component('mycom1', {
+                // 通过定义template属性，指定组件要展示的html结构和内容
+                template: "<h3>这是使用Vue.extend创建一个组件</h3>"
+            })
+            var vm = new Vue({
+                el:"#app",
+                data:{},
+                methods:{}
+            }); 
+        }
+    </script>
+</head>
+<body>
+    <div id="app">
+        <mycom1></mycom1>
+    </div>
+</body>
+</html>

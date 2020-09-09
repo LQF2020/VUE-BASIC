@@ -1,0 +1,25 @@
+什么是组件：
+组件的出现，就是为了拆分Vue实例的代码量，能够让我们以不同的组件，来划分不同的功能模块，将来我们需要什么功能，就可以调用对应的组件即可；
+组件化和代模块化的不同：
+模块化：是从代码逻辑的角度进行划分，方便代码的重用
+组件化：是从UI的角度进行划分，前端的组件化，方便UI模块重用
+
+
+父组件向子组件传值
+
+默认下，子组件无法访问父组件的属性和方法，
+方法：
+Prop 是可以在组件上注册的一些自定义特性。当一个值传递给一个 prop 特性的时候，它就变成了那个组件实例的一个属性
+Vue.component('blog-post', {
+  props: ['title'],
+  template: '<h3>{{ title }}</h3>'
+})
+
+<blog-post title="My journey with Vue"></blog-post>
+<blog-post title="Blogging with Vue"></blog-post>
+<blog-post title="Why Vue is so fun"></blog-post>
+
+打印：
+My joureny with Vue
+Blogging with Vue
+Why Vue is so fun

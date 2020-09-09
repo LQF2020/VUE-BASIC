@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>v-model 数据双向绑定</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+        <script src="./js/vue-2.5.21.js"></script>
+        <script>
+            window.onload = function(){
+                var vm = new Vue({
+                    el:"#app",
+                    data:{
+                        msg:"This is my data!"
+                    }
+                });
+            }
+        </script>
+    </head>
+    <body>
+       
+    <div id="app">
+        {{msg}}
+        <br>
+        <!-- v-bind 只能实现数据的单向绑定，即m层到v层的定向展示
+        而v-model可以实现数据的双向绑定
+        注意， v-model只能用于表单元素 
+        input（radio，text, address, email） checkbox select textarea等-->
+        <input type="text" v-model="msg">
+        <hr>
+        <h2> v-bind 只能实现数据的单向绑定，即m层到v层的定向展示</h2>
+         <h2>   而v-model可以实现数据的双向绑定</h2>
+          <h2>注意， v-model只能用于表单元素
+        input（radio，text, address, email） checkbox select textarea等</h2>
+    </div>
+        
+    </body>
+</html>

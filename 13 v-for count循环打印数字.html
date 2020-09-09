@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-for打印对象数组</title>
+</head>
+<script src="./js/vue-2.5.21.js"></script>
+<script>
+    window.onload = function () {
+        var vm = new Vue({
+            el: "#app",
+            data: {
+             times:100
+            },
+            methods: {
+
+            }
+        });
+    }
+</script>
+
+<body>
+    <div id="app">
+        <h2 style="color:red; opacity: 0.8; font-weight: 200">v-for循环打印数字</h2>
+        如果times是整形数字，则进行按顺序数字打印
+        <li style="list-style: none" v-for=" (num,index) in times">
+            {{index+1}}.这是第{{num}}次打印
+        </li>
+  
+
+    </div>
+</body>
+
+</html>

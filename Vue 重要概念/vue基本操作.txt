@@ -1,0 +1,18 @@
+创建一个vue实例：
+var vm = new Vue({
+                // el代表了我们控制区域
+              el: '.app',
+               <!--data 数据是 mvvm中的视图层 m-->
+              data: {
+	message1: 'My name is hugo'
+                  message2: '<h1 style="color: deepskyblue">My name is hugo</h1>'
+              }
+            })
+
+
+打印数据：
+1.   {{ }}
+2.    <div v-text = "message1"></div>
+3.   <div v-html = "message2"></div>
+
+v-html能够识别html标识符，v-text直接打印字符串数据，不识别html标识符

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-bind绑定类名样式</title>
+    <style>
+        .smallwidth{
+            width:100px;
+        }
+        .bigwidth{
+            width:200px;
+        }
+        .smallheight{
+            height: 100px;
+        }
+        .bigheight{
+            height: 200px;
+        }
+        .hasborder{
+            border: 1px solid black;
+        }
+        .green{
+            background: green;
+            opacity:0.5
+        }
+        .red{
+            background:red;
+            opacity:0.5
+        }
+    </style>
+    <script src="./js/vue-2.5.21.js"></script>
+    <script>
+        window.onload = function() {
+            var vm = new Vue({
+                el:"#app",
+                data:{
+                    objStyle:{height:'100px', width:'100px',border:'1px solid red'},
+                    objStyleClass:{ bigheight: true, bigwidth: true, green: false, hasborder: true, red: true }
+                },
+                methods:{
+
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="app">
+        <!-- 方式一：普通引用 -->
+        <div class="smallheight bigwidth green">div1</div>
+        <!-- 方式二：往class传入一个样式对象，键为类名属性，值为boolean值，以控制样式 -->
+        <div :class="{bigheight:true, bigwidth:true,green:false,hasborder:true,red:true}">div2</div>
+        <!-- 方式三：在data里定义一个样式对象，并在内敛中定义 -->
+        <div :style=objStyle>div3</div>
+        <!-- 方式四：在data里定义一个class对象，并在内敛中定义 -->
+        <div :class=objStyleClass>div4</div>
+    </div>
+</body>
+</html>

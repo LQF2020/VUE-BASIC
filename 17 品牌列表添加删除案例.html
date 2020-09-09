@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>品牌列表案例</title>
+    <script src="./js/vue-2.5.21.js"></script>
+    <link rel="stylesheet" href="./css/bootstrap-4.1.3.css"></link>
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        [v-cloak] {
+            display: none;
+        }
+        .hasPadding{
+            word-spacing: 35px
+        }
+    
+    </style>
+    <script>
+        window.onload = function(){
+            var mydate = new Date();
+            var vm = new Vue({
+                el:"#app",
+                data:{
+                    successMsg:"",
+                    warningMsg: "",
+                    inputId:'',
+                    inputName:'',
+                    keywords:'',//搜索关键字
+                    targetObjs: [],
+                    aObj:[]
+                },
+                methods:{
+                    createInfo:function(){
+                       var now = new Date();
+                       if(this.inputId && this.inputName){
+                           var hasNoItem = true;
+                        //    方式一：普通for循环实现数组遍历
+                        //    for(item of this.aObj){
+                        //        if(item.id == parseInt(this.inputId)){
+                        //            hasNoItem = false;
+                        //            this.warningMsg = "Id Already Exist";
+                        //            this.successMsg = "";
+                        //        }
+                        //    }
+                        // 方式二： 使用数组的every方法，
+                        // 只要callback函数条件不成立，就return false，停止循环
+                        // 如果所有item条件成立，return true
+                            hasNoItem = this.aObj.every((item,i)=>{
+                                return item.id != this.inputId;
+                            })
+                                
+                            if (hasNoItem) {
+                                var thisobj = { id: parseInt(this.inputId), brand: this.inputName, cTime: now.toLocaleString() };
+                                this.aObj.push(thisobj);
+                                this.inputId ="";
+                                this.inputName="";
+                                this.warningMsg="";
+                                this.successMsg = "Message Add Successfully!"
+                            }else{
+                                this.warningMsg = "Id Already Exist";
+                                this.successMsg = "";
+                            }
+                        }else{
+                            this.successMsg = "";
+                            this.warningMsg =  "Please fill all the box";
+                        }
+                        this.targetObjs = this.aObj;
+                    },
+                    delInfo: function(toDelId) {
+                        this.aObj.some((item,i)=>{
+                            if(item.id == toDelId){
+                                this.aObj.splice(i,1);
+                                return true;
+                            }
+                        })
+                        this.search(this.keywords);
+                    },
+                    EditInfo:function(toEditId){
+                        var editItem = null;
+                        for(item of this.aObj){
+                            if(item.id == toEditId){
+                                editItem = item
+                            }
+                        }
+                        if(editItem){
+                            alert('ready to Edit')
+                        }
+                    },
+                    search:function(keywords){
+                       
+                        if(keywords){
+                            this.targetObjs = this.aObj.filter((item)=>{
+                                return (item.brand.indexOf(keywords)!=-1)
+                            })
+                        } else{
+                            this.targetObjs = this.aObj;
+                        }
+            
+                    },
+                    showList:function(){
+                        this.targetObjs = this.aObj;
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="app">
+
+        <div class="card ">
+
+            <div class="card-header bg-primary text-white text-center">
+                <h3 class="panel-title">添加品牌</h3>
+            </div>
+            <div class="card-body" class="form-inline">
+                <label>Id:
+                    <input type="text" class="form-control" v-model="inputId">
+                </label>
+                <label>Name:
+                    <input type="text" class="form-control" v-model="inputName">
+                </label>
+                <input type="button" value="Add" class="btn btn-primary" @click="createInfo()">
+                <label>搜索名称关键字:
+                    <input type="text" class="form-control" v-model="keywords">
+                </label>
+                <input type="button" value="Search" class="btn btn-primary" @click="search(keywords)">
+                <input type="button" value="My List" class="btn btn-primary" @click="showList()">
+            </div>
+
+        </div>
+
+        <table class="table-row table table-hover table-bordered table-striped" role="table">
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>品牌时间</td>
+                    <td>添加时间</td>
+                    <td>操作</td>
+                </tr>
+            </thead>
+            <tbody v-cloak v-for="item in targetObjs" :key="item.id">
+                <tr>
+                    <td>{{item.id}}</td>
+                    <td>{{item.brand}}</td>
+                    <td>{{item.cTime}}</td>
+                    <td class="hasPadding">                        
+                        <a href="" @click.prevent="delInfo(item.id)" >Del</a>
+                        <a href="" @click.prevent="EditInfo(item.id)">Edit</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        <div v-cloak v-if="successMsg" class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Congratulations!</strong> {{successMsg}}
+        </div>
+        <div v-cloak v-if="warningMsg" class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Hey!</strong> {{warningMsg}}
+        </div>
+    </div>
+</body>
+</html>

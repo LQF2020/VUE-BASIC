@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-if和v-show的区别</title>
+    <script src="./js/vue-2.5.21.js"></script>
+    <script>
+        window.onload = function(){
+            var vm = new Vue({
+                el:"#app",
+                data:{
+                    flag:true
+                },
+                methods:{
+                    change:function(){
+                        this.flag = !this.flag
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="app">
+        <h1>v-if和v-show的区别</h1>
+        <!-- v-if每次都会重新创建或者删除数据，页面负担较大，
+        v-show则不会重新删除创建数据，页面负担较小 -->
+        <h2 v-if="flag">v-if为真时候，页面打印对应区块数据；为假时候，页面不打印数据并且不会渲染在html模板上</h2>
+        <h2 v-show="flag">v-show为真时候，页面打印对应区块数据；为假时候，仅仅改变模块属性display:none</h2>
+        <input type="button" value="toggle" @click="change()">
+
+        
+    </div>
+</body>
+</html>

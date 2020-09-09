@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件Component基本定义和用法</title>
+    <script src="./js/vue-2.5.21.js"></script>
+    <script>
+        window.onload = function () {
+
+            var vm = new Vue({
+                el: "#app",
+                data: {
+                    msgFromSon:""
+                },
+                methods: {
+                    FromSon: function(data){
+                        this.msgFromSon = data;
+                    }
+                },
+                components: {
+                    mycom1: {
+                        props: ['msg'],
+                        template: "#tem",
+                        methods:{
+                          myclick: function(){
+                              //emit函数会触发通过v-on绑定在子组件身上的父组件函数
+                              //emit第一个参数 func，即父组件的FromSon方法
+                              //emit第二个参数，是FromSon方法的参数
+                              this.$emit("func","Hello,  i am your child component!")
+                          }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div id="app">
+        <h2>父组件从子组件中获取的值：{{msgFromSon}}</h2>
+        <!-- 我们可以通过v-on 将父组件的method动态传递给子组件 -->
+        <mycom1 v-on:func="FromSon"></mycom1>
+    </div>
+
+    <template id="tem">
+        <div>
+            <h2>子组件通过调用父组件方法，往父组件传值</h2>
+            <input type="button" value="往父组件传值" v-on:click="myclick()">
+        </div>
+    </template>
+</body>
+
+</html>

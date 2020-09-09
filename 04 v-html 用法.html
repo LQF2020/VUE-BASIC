@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>v-html用法</title>
+
+    <!--1.导入vue包-->
+    <script src="./js/vue-2.5.21.js"></script>
+    <script>
+        window.onload = function(){
+            // 导入vue包后，内存中就多了vue的构造函数
+            <!--vm实例是 mvvm中的视图层 vm-->
+            var vm = new Vue({
+                // el代表了我们控制区域
+              el: '.app',
+               <!--data 数据是 mvvm中的视图层 m-->
+              data: {
+                  message: '<h1 style="color: deepskyblue">My name is hugo</h1>'
+              }
+            })
+         }
+
+    </script>
+</head>
+<body>
+    <div v-cloak class="app">
+        <h2>这是用插件表达式进行数据打印,{{variable_name}}</h2>
+        {{message}}
+        <h2>这是用v-text进行数据打印</h2>
+        <div v-text="message" ></div>
+        <h2>这是用v-html进行数据打印,能够识别待打印数据中的各类html标识符，如h1,p,span等</h2>
+        <div v-html="message" ></div>
+    </div>
+
+
+</body>
+</html>

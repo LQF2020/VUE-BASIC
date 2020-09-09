@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>v-if条件判断</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+    <script src="./js/vue-2.5.21.js"></script>
+    <script>
+        window.onload = function () {
+            var vm = new Vue({
+                el:"#app",
+                data:{
+                    flag:false,
+                    todos:[
+                        { isComplete: true, id: 1 },
+                        { isComplete: false, id: 2 },
+                        { isComplete: true, id: 3 },
+                        { isComplete: false, id: 4 },
+                        { isComplete: true, id: 5 },
+                        ]
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="app">
+        <!-- 简单的条件判断 -->
+        <h1 v-if=flag>Yes</h1>
+        <h1 v-else>No</h1>
+        <!-- v-for和v-if混合作用 -->
+        <li v-for="todo in todos" v-if="!todo.isComplete">
+            {{ todo.id }}
+        </li>
+    </div>
+    
+    
+</body>
+</html>

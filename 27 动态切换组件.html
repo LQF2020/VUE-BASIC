@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件Component基本定义和用法</title>
+    <style>
+        
+        .v-enter,
+        .v-leave-to{
+            opacity: 0;
+            transform:translateX(150px);
+        }
+
+        .v-enter-active,
+        .v-leave-active{
+            transition: all 0.5s ease;
+        }
+
+        </style>
+    <script src="./js/vue-2.5.21.js"></script>
+    <script>
+        window.onload = function () {
+
+            var vm = new Vue({
+                el: "#app",
+                data: {
+                    componentId:"login"
+                },
+                methods: {},
+                components: {
+                    login: {
+                        template: "<h2>这是login组件</h2>",
+                    },
+                    register:{
+                        template:"<h2>这是register组件</h2>"
+                    }
+                }
+            });
+        }
+    </script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="Login" @click="componentId='login'">
+        <input type="button" value="Register" @click="componentId='register'">
+        <hr>
+        <transition mode="out-in">
+            <component :is="componentId"></component>
+        </transition>
+        
+    </div>
+
+</body>
+
+</html>

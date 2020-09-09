@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue-resource改造品牌列表案例</title>
+    <link rel="stylesheet" href="./css/bootstrap-4.1.3.css">
+    <script src = './js/vue-2.5.21.js'></script>
+    <script src='./js/vue-resource-v1.5.1.js'></script>
+    <script>
+         window.onload = function () {
+
+             //全局配置访问接口根域名，后面发期http访问时候就可以只需要加上特定请求的URL
+             Vue.http.options.root = "http://127.0.0.1:7500/"
+                var mydate = new Date();
+                var vm = new Vue({
+                    el: "#app",
+                    data: {
+                        successMsg: "",
+                        warningMsg: "",
+                        inputId: '',
+                        inputName: '',
+                        keywords: '',//搜索关键字
+                        targetObjs: [],
+                        aObj: []
+                    },
+                    created(){
+                        this.getAllProds();
+                    },
+                    methods: {
+
+                        getAllProds: function(){
+                            this.$http.get("prodList").then(res => {
+                                res = res.body;
+                                if (res.status == 0) {
+                                    this.aObj = res.result;
+                                    this.targetObjs = this.aObj;
+                                } else {
+                                    alert('Unexpected Err Caught')
+                                }
+                            })
+                        },
+                        createInfo: function () {
+                            var now = new Date();
+                            if (this.inputId && this.inputName) {
+                                var hasNoItem = true;
+                                //    方式一：普通for循环实现数组遍历
+                                //    for(item of this.aObj){
+                                //        if(item.id == parseInt(this.inputId)){
+                                //            hasNoItem = false;
+                                //            this.warningMsg = "Id Already Exist";
+                                //            this.successMsg = "";
+                                //        }
+                                //    }
+                                // 方式二： 使用数组的every方法，
+                                // 只要callback函数条件不成立，就return false，停止循环
+                                // 如果所有item条件成立，return true
+                                hasNoItem = this.aObj.every((item, i) => {
+                                    return item.id != this.inputId;
+                                })
+
+                                if (hasNoItem) {
+                                    var thisobj = { id: parseInt(this.inputId), name: this.inputName, ctime: now.toLocaleString() };
+                                    // this.aObj.push(thisobj);
+                                    this.$http.post("prodList", thisobj, { emulateJSON: true })
+                                    .then(res => {
+                                        res = res.body;
+                                        if (res.status == 0) {
+                                            console.log('Item is added successfully!')
+                                        } else {
+                                            alert('Unexpected Err Caught')
+                                        }
+                                    })
+                                    
+                                    this.inputId = "";
+                                    this.inputName = "";
+                                    this.warningMsg = "";
+                                    this.successMsg = "Message Add Successfully!"
+                                } else {
+                                    this.warningMsg = "Id Already Exist";
+                                    this.successMsg = "";
+                                    alert(this.warningMsg);
+                                }
+                            } else {
+                                this.successMsg = "";
+                                this.warningMsg = "Please fill all the box";
+                                alert(this.warningMsg);
+                            }
+                            this.getAllProds()
+                        },
+                        delInfo: function (toDelId) {
+                            this.$http.delete("prodList/", { params: { id: toDelId } }).then(res => {
+                                res = res.body;
+                                if (res.status == 0) {
+                                    this.getAllProds();
+                                    this.search(this.keywords);
+                                } else {
+                                    alert('Unexpected Err Caught')
+                                }
+                            });
+                        },
+                        search: function (keywords) {
+
+                            if (keywords) {
+                                this.targetObjs = this.aObj.filter((item) => {
+                                    return (item.name.indexOf(keywords) != -1)
+                                })
+                            } else {
+                                this.targetObjs = this.aObj;
+                            }
+
+                        },
+                        showList: function () {
+                            this.targetObjs = this.aObj;
+                        }
+                    }
+                });
+            }
+    </script>
+
+</head>
+<body>
+    <div id="app">
+
+        <div class="card ">
+        
+            <div class="card-header bg-primary text-white text-center">
+                <h3 class="panel-title">添加品牌</h3>
+            </div>
+            <div class="card-body" class="form-inline">
+                <label>Id:
+                    <input type="text" class="form-control" v-model="inputId">
+                </label>
+                <label>Name:
+                    <input type="text" class="form-control" v-model="inputName">
+                </label>
+                <input type="button" value="Add" class="btn btn-primary" @click="createInfo()">
+                <label>搜索名称关键字:
+                    <input type="text" class="form-control" v-model="keywords">
+                </label>
+                <input type="button" value="Search" class="btn btn-primary" @click="search(keywords)">
+                <input type="button" value="My List" class="btn btn-primary" @click="showList()">
+            </div>
+        
+        </div>
+
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>NAME</th>
+                    <th>CTIME</th>
+                    <th>OPERATION</th>
+                </tr> 
+            </thead>
+            <tbody>
+                <tr v-for="item in targetObjs" :key="item.id">
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.ctime}}</td> 
+                    <td>
+                        <a href="" @click.prevent="delInfo(item.id)">Del</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

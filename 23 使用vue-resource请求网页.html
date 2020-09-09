@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>使用vue-resource请求网页</title>
+    <script src="./js/vue-2.5.21.js"></script>
+    <!-- 由于vue-resource依赖于vue.js,所以必需在其后 -->
+    <script src="./js/vue-resource-v1.5.1.js"></script>
+    <script>
+        window.onload =function(){
+            var vm = new Vue({
+                el:"#app",
+                data:{},
+                methods:{
+                    getInfo:function(){ //向服务器发起get请求
+                        
+                        this.$http.get("http://127.0.0.1:7500/").then(function (res) {
+                            console.log(res)
+                        })
+                  
+                    }
+                    
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="app">
+        <input type="button" value="GET" @click="getInfo()">
+    </div>
+    
+</body>
+</html>

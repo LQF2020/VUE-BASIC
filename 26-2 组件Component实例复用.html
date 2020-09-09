@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>组件Component基本定义和用法</title>
+    <script src="./js/vue-2.5.21.js"></script>
+    <script>
+        window.onload = function(){
+
+           Vue.component('mycom1', {
+                // 通过定义template属性，指定组件要展示的html结构和内容
+                template: "<button @click='add()'>You clicked me {{ count }} times.</button>",
+                data:function(){
+
+                    return{
+                        count:0
+                    }        
+                },
+                methods:{
+                    add: function(){
+                        this.count ++;
+                    }
+                }
+            })
+
+            var vm = new Vue({
+                el:"#app"
+            }); 
+        }
+    </script>
+</head>
+<body>
+    <div id="app">
+        <mycom1></mycom1>
+        <mycom1></mycom1>
+        <mycom1></mycom1>
+    </div>
+</body>
+</html>

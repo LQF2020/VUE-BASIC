@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>全局过滤器filter基本用法</title>
+    <script src="./js/vue-2.5.21.js"></script>
+    <script>
+        window.onload = function () {
+            // 这里定义了一个全局过滤器
+            // 过滤器filter第一个变量是过滤器名字
+            // 过滤器filter第二个变量是过滤函数
+            // 过滤函数第一个变量是过滤器管前的data值,在这里为msg
+            // 过滤函数第二个变量是用户变量
+            Vue.filter('msgFormat1', function (data,replaceValue) {
+                return data.replace(/Lu qifu/g,replaceValue);
+            });
+            Vue.filter('msgFormat2', function (data, replaceValue) {
+                return data.replace(/HUGO/g, replaceValue);
+            });
+
+
+            var vm = new Vue({
+                el:"#app",
+                data:{
+                    msg:'Hello, my name is Lu qifu. Lu qifu needs to work harder'
+                }
+            });
+        }
+    </script>
+</head>
+<body>
+    <div id="app">
+        Before:
+        {{msg}} 
+        <hr>
+        After 1st filter:
+        {{msg | msgFormat1("HUGO")}}
+        <hr>
+        After 2nd filter:
+        {{msg | msgFormat1("HUGO") | msgFormat2("启富")}}
+    </div>
+</body>
+</html>

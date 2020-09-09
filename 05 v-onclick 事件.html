@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <title>v-onclick事件</title>
+
+    <!--1.导入vue包-->
+    <script src="./js/vue-2.5.21.js"></script>
+    <script>
+        window.onload = function(){
+            // 导入vue包后，内存中就多了vue的构造函数
+            // <!--vm实例是 mvvm中的视图层 vm-->
+            var vm = new Vue({
+                // el代表了我们控制区域
+              el: '.app',
+            //    <!--data 数据是 mvvm中的视图层 m-->
+              data: {
+                styleObject: {
+                    background: 'red',
+                    width:'100px',
+                    height:'100px'
+                }
+              },
+            //   这个methods指定了当前实例所有可用的vue方法
+            methods:{
+                showColor: function () {
+                    alert("This color is:" + this.styleObject.background)
+                },
+                showWidth: function () {
+                    alert("This width is:" + this.styleObject.width)
+                }
+            }
+            })
+         }
+
+        function showColor1(){
+            var oDiv1 = document.getElementById('div1')
+            alert('This color is'+oDiv1.style.backgroundColor);
+        }
+    </script>
+</head>
+<body>
+
+    <!-- 普通onclick事件绑定 -->
+    <div id='div1' style="width: 100px; height: 100px; background-color:black;" onclick="showColor1()"></div>
+    <hr>
+
+    <!-- vue中 onclick事件绑定 -->
+    <div class="app">
+        <!-- 两种写法 :property || v-bind:property -->
+        <!-- 绑定的onclick事件必须在methods中定义 -->
+
+        <div :style="styleObject" v-on:mouseover="showWidth()"></div>
+        <!-- <div v-bind:style="styleObject"></div> -->
+        <input type="button" value="showColor" v-on:click="showColor()">
+    </div>
+
+
+
+</body>
+</html>
